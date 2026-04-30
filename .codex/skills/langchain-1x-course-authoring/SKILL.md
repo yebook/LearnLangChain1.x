@@ -121,6 +121,39 @@ Use this structure flexibly, but do not skip runnable examples for coding lesson
 
 Write each section so a learner can read it alone and know what to do next. Avoid relying on a teacher being present to explain missing steps.
 
+## New Concept In Example Rule
+
+When a runnable example introduces a class, method, parameter, chaining pattern, or SDK behavior that has not appeared in previous lessons, explain it close to its first use.
+
+- Do not let a new API appear only inside code without explanation.
+- Keep the explanation proportional: a new major abstraction deserves its own section; a small helper method can be explained in a short paragraph or bullet list before or after the code.
+- Explain what problem it solves, what input it expects, what output or side effect it produces, and why it is being used in this example.
+- If the API was already taught before, use only a brief reminder when needed.
+- Examples include methods such as `RunnablePassthrough.assign(...)`, `ChatPromptTemplate.partial(...)`, `parser.get_format_instructions()`, `with_config(...)`, new parser classes, new Runnable helpers, and non-obvious config arguments.
+
+## Knowledge Boundary And Duplication Control
+
+Before creating a new lesson, check the master outline and all completed lesson files to define the lesson's boundary:
+
+- What concept is introduced for the first time in this lesson?
+- What prior concepts are only being reused?
+- What prior concepts are being deepened with a new use case?
+- What nearby future concepts should be mentioned only as preview, not taught early?
+
+Avoid re-teaching an already covered concept from scratch unless the user explicitly asks for a rewrite or remediation. This is primarily an authoring discipline, not something that must be repeatedly announced in the lesson prose. When a concept appears again, choose one of three levels:
+
+- First explanation: use when the concept is introduced for the first time. Explain why it exists, what problem it solves, the core input/output shape, and show a minimal runnable example.
+- Brief review: use when the concept was already taught and is only needed as prerequisite context. Keep it to a few sentences, then move quickly to the current lesson's new point.
+- Deepened application: use when the concept was already taught but the current lesson uses it for a new engineering purpose. Focus on the new angle, tradeoff, or project-level usage instead of restating the basics.
+
+For example:
+
+- If structured output was already introduced with `with_structured_output()`, later lessons should avoid repeating the basic schema tutorial and instead focus on how structured results drive routing, validation, retry, programmatic decisions, or workflow state.
+- If LCEL was already introduced with `prompt | model | parser`, later lessons should avoid re-explaining the pipe operator from zero and instead focus on multi-input data flow, parallel branches, reusable chain design, or debugging.
+- If Output Parser was already introduced, later lessons should briefly recall it only when needed, then teach the new parser role in the current workflow.
+
+Use cross-references sparingly. Prefer natural transitions and concise reminders over conspicuous disclaimers such as "本课不再讲..." or long lists of prior topics. A short reference like "前面已经见过..." is enough when it helps orientation.
+
 ## Teaching Style
 
 Write as a self-study textbook author speaking directly to the learner.
@@ -156,6 +189,9 @@ For each major concept, try to answer several of these questions naturally:
 
 Before finalizing a lesson, check:
 
+- Is the lesson's knowledge boundary clear against prior and upcoming lessons?
+- Are repeated concepts handled as brief review or deepened application rather than full duplicate teaching?
+- Are all new APIs or methods that appear in examples explained near their first use?
 - Does every command use the current project convention?
 - Are all code examples internally consistent?
 - Are imports current and official-doc-aligned?
